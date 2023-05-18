@@ -1,0 +1,33 @@
+.background {
+position: relative;
+  height: 765px;
+  .overlay { 
+    height: 100%;
+     background-color: rgba(0,0,0,0.5);
+    .img-bg {
+      height: 100%;
+      position: absolute;
+      z-index: -1;
+      width: 100%;
+      object-fit: cover;
+    }
+
+    .slogan {
+      position: absolute;
+      color: white;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      h1 {
+        font-size: 65px;
+        white-space: nowrap;
+      }
+      .text-color {
+        font-size: 36px;
+        color: #FFA902;
+      }
+    }
+  }
+
+}

@@ -1,0 +1,12 @@
+.nav-bar {
+    display: flex;
+    padding: 0 80px;
+    height: 60px;
+    align-items: center;
+    justify-content: center;
+    gap: 50px;
+    a {
+      color: white;
+      font-size: 20px;
+    }
+}
