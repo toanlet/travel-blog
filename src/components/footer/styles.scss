@@ -1,0 +1,38 @@
+.footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 80px;
+    background: #FFA902;
+    color: white;
+    padding: 0 60px;
+   
+    margin-top: 80px;
+    .content {
+      ul {
+        list-style: none;
+        display: flex;
+        gap: 30px;
+      }
+      a {
+        color: white;
+        text-decoration: none;
+        &:hover{
+          text-decoration: underline;
+        }
+      }
+    }
+    .icon-img {
+          width: 16px;
+          height: 16px;
+          padding: 6px;
+          background: #868383;
+          border-radius: 50%;
+          margin: 0 5px;
+          cursor: pointer;
+        &:hover {
+          background: white;
+          color: #868383;
+        }
+      }
+}

@@ -27,7 +27,6 @@ export default function Landing() {
     <div>
       <Categories />
       <Feature />
-      
     </div>
   );
 }

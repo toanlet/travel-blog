@@ -1,4 +1,5 @@
 import React from 'react';
+import { getImageUrl } from 'src/helper/utils';
 
 interface FeatureItemProps {
   image: string;
@@ -12,11 +13,12 @@ export default function FeatureItem({
 }: FeatureItemProps) {
   return (
     <div className="card">
-      <img src={image} alt="title" />
+      <img src={getImageUrl(image)} alt="title" height={200} />
       <div className="content">
         {' '}
         <h3>{title}</h3>
-        <p>{description}</p>{' '}
+        <p className="description">{description}</p>{' '}
+        <p className="view-more">View more</p>
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 .feature {
   padding: 0 100px;
-  h3 {
+  h1 {
       text-align: center;
     }
   .list-item {
@@ -19,6 +19,16 @@
       img {
         width: 100%;
       }
+    }
+    .view-more {
+      cursor: pointer;
+      color: #FFA902;
+    }
+    .description {
+      overflow: hidden;
+      text-overflow: ellipsis;
+        -webkit-line-clamp: 3;
+        min-width: 0;
     }
   }
 }

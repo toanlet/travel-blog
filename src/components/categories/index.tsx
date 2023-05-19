@@ -13,89 +13,95 @@ import Image10 from 'src/assets/images/road.png';
 import Category from './item';
 import './styles.scss';
 import SlideButton from './slide-button';
+import { getCategories } from 'src/api/categories';
+import { converData } from 'src/helper/utils';
 export default function Categories() {
   const [index, setIndex] = useState(0);
-
-  const list = [
-    { image: Image1, title: 'Đa Nang', id: 1 },
-    { image: Image2, title: 'Hoi An', id: 2 },
-    { image: Image3, title: 'Ninh Binh', id: 3 },
-    { image: Image4, title: 'Nha Trang', id: 4 },
-    { image: Image5, title: 'Mount Travel', id: 1 },
-    { image: Image6, title: 'Solo Travel', id: 2 },
-    { image: Image7, title: 'Old City Travel', id: 3 },
-    { image: Image8, title: 'Osean Travel', id: 4 },
-    { image: Image9, title: 'Jungal Travel', id: 3 },
-    { image: Image10, title: 'Road Travel', id: 4 },
-  ];
-
-  useEffect(() => {
-    const id = handleAutoEffect();
-
-    return () => {
-      clearTimeout(id);
-    };
-  }, [index]);
-
-  const handleAutoEffect = () => {
-    const id = setTimeout(() => {
-      setIndex(index + 1);
-      if (index === list.length - 1) {
-        setIndex(0);
-      }
-    }, 3000);
-    return id;
-  };
+  const [list, setList] = useState<any[]>([]);
 
   const hanldeAction = (type: string) => {
     if (type === 'next') {
       setIndex(index + 1);
-      if (index === list.length - 1) {
+      if (index >= list.length) {
         setIndex(0);
       }
     } else {
-      setIndex(index - 1);
-      if (index === 0) {
-        setIndex(list.length - 1);
+      if (index <= 0) {
+        setIndex(list.length);
+      } else {
+        setIndex(index - 1);
       }
     }
   };
+  useEffect(() => {
+    getList();
+  }, []);
 
-  const handleClickDot = (index: number) => {
-    setIndex(index);
+  useEffect(() => {
+    const id = setTimeout(() => {
+      if (index === list.length) {
+        setIndex(0);
+      } else {
+        setIndex(index + 1);
+      }
+    }, 1500);
+
+    return () => {
+      clearTimeout(id);
+    };
+  }, [index, list.length]);
+
+  const getList = async () => {
+    const res = await getCategories();
+
+    if (res.status === 200 && res.data.data) {
+      const data = converData(res.data.data);
+      setList(data);
+    }
+  };
+
+  const getClassActive = (el: any) => {
+    const position = [...list];
+    let activeList = [];
+    if (index === position.length) {
+      activeList = position.splice(-6);
+    } else if (index >= 0 && index <= 6) {
+      activeList = position.splice(index, 6);
+    } else if (index > 6 && index < list.length) {
+      const add = index - 6;
+      activeList = position.splice(add, 6);
+    }
+
+    if (activeList.some((item: any) => item.id === el.id)) {
+      return 'active';
+    }
+    return 'no-active';
   };
 
   return (
     <div className="categories">
-      <h3>Choose a category</h3>
+      <h1>Choose a category</h1>
       <div className="list">
         <SlideButton direction="next" handleAct={hanldeAction} />
         {list.map(
-          (el: { image: string; title: string; id: number }, i: number) => {
+          (
+            el: {
+              image: string;
+              title: string;
+              id: number;
+              class?: string;
+            },
+            i: number
+          ) => {
             return (
-              <Category
-                {...el}
-                className={index === i ? 'active' : ''}
-                key={el.id}
-              />
+              <Category {...el} key={el.id} className={getClassActive(el)} />
             );
           }
         )}
 
         <SlideButton direction="pre" handleAct={hanldeAction} />
       </div>
-
-      <div className="dot-list">
-        {list.map((el: any, i: number) => {
-          return (
-            <span
-              key={el.id}
-              className={`dot-item ${index === i ? 'dot-active' : ''}`}
-              onClick={() => handleClickDot(i)}
-            ></span>
-          );
-        })}
-      </div>
+      <div className="dot">{}</div>
     </div>
   );
 }
